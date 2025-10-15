@@ -1,0 +1,59 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---- Environment ----
+.env
+*.env
+*.venv
+venv/
+env/
+ENV/
+.venv/
+
+# ---- Django specific ----
+*.log
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# ---- IDEs / Editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS generated files ----
+.DS_Store
+Thumbs.db
+
+# ---- Python packaging ----
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Unit test / coverage ----
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# ---- Migrations (optional) ----
+# Uncomment if you want to ignore migrations during early dev
+# **/migrations/
+# !**/migrations/__init__.py
+
+# ---- Render or deployment ----
+# Collected static files
+static/
