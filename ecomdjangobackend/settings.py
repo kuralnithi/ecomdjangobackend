@@ -9,9 +9,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-here')
 
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# Use Render's port environment variable
+PORT = int(os.environ.get("PORT", 8000))
+
+# When running server in production
+if os.environ.get("RENDER"):
+    DEBUG = False
+    ALLOWED_HOSTS = ["ecomdjangobackend.onrender.com"]
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
