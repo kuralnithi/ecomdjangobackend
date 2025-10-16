@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'ecomdjangobackend.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'ecom_db',
 #         'USER': 'postgres',
-#         'PASSWORD': 'Pasam123@kural',
+#         'PASSWORD': '',
 #         'HOST': os.getenv('DB_HOST', 'localhost'),
 #         'PORT': os.getenv('DB_PORT', '5432'),
 #     }
