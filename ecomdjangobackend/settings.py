@@ -10,17 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-here')
 
 
-# Use Render's port environment variable
-PORT = int(os.environ.get("PORT", 8000))
-
-# When running server in production
-if os.environ.get("RENDER"):
-    DEBUG = False
-    ALLOWED_HOSTS = ["ecomdjangobackend.onrender.com"]
-else:
-    DEBUG = True
-    ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -133,3 +122,33 @@ RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
 
 # JWT Configuration
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'your-jwt-secret')
+
+
+
+
+
+
+
+# Render specific settings
+
+
+# Use Render's port environment variable
+PORT = int(os.environ.get("PORT", 8000))
+
+# When running server in production
+if os.environ.get("RENDER"):
+    DEBUG = False
+    ALLOWED_HOSTS = ["ecomdjangobackend.onrender.com"]
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
+
+
+STATIC_URL = '/static/'
+
+# Add this line 👇
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Optional but recommended for production:
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
