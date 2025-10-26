@@ -8,4 +8,5 @@ urlpatterns = [
     path('resetpassword', views.reset_password, name='reset_password'),
     path('resetpasswordpage', views.reset_password_page, name='reset_password_page'),
     path('oauth', views.oauth_user, name='oauth_user'),
+    path('verifytoken/', views.verify_token, name='verify_token'),
 ]

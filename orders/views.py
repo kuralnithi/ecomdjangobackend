@@ -55,11 +55,10 @@ def razor_payment(request):
         return Response({'message': 'failed to create order', 'data': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@csrf_exempt  # ✅ Important: Disable CSRF since Razorpay posts directly
+@csrf_exempt  
 @api_view(['POST'])
 def payment_validation(request):
     try:
-        # 1️⃣ Get the data sent from frontend (paymentHandler)
         data = request.data
         print("🔹 Payment validation data received:", data)
 

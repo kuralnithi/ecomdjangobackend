@@ -1,38 +1,36 @@
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-import bcrypt
 
-class User(models.Model):
-    USER_TYPE_CHOICES = [
-        ('customer', 'Customer'),
-        ('admin', 'Admin'),
-    ]
-    
-    username = models.CharField(max_length=100, unique=True)
+class UserManager(BaseUserManager):
+    def create_user(self, emailid, username, password=None, **extra_fields):
+        if not emailid:
+            raise ValueError("Email is required")
+        emailid = self.normalize_email(emailid)
+        user = self.model(emailid=emailid, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, emailid, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(emailid, username, password, **extra_fields)
+
+
+class User(AbstractBaseUser, PermissionsMixin):
     emailid = models.EmailField(unique=True)
-    password = models.CharField(max_length=255)
-    usertype = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='customer')
+    username = models.CharField(max_length=100, unique=True)
+    usertype = models.CharField(max_length=20, choices=[('customer','Customer'),('admin','Admin')], default='customer')
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     resetPasswordToken = models.CharField(max_length=100, null=True, blank=True)
     resetPasswordTokenExpiry = models.DateTimeField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def set_password(self, raw_password):
-        self.password = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    USERNAME_FIELD = 'emailid'
+    REQUIRED_FIELDS = ['username']
 
-    def check_password(self, raw_password):
-        return bcrypt.checkpw(raw_password.encode('utf-8'), self.password.encode('utf-8'))
-
-    def __str__(self):
-        return self.username
+    objects = UserManager()
 
     class Meta:
         db_table = 'users'
-        
-        
-        
-    @property
-    def is_authenticated(self):
-        return True
-
-    @property
-    def is_active(self):
-        return True
